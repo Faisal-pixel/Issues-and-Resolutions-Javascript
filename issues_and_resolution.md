@@ -3,39 +3,39 @@
     1. Figuring out how to add the toggle button in the Create New Bidder form under the service categories, and also updating it in the state.
     2. Figuring out how to integrate devextreme datagrid.
     4. Figuring out how to style devextreme datagrid to my taste.
+    5. Error anytime I create a remote repository with a readme and try to push from an existing local repository.
 
 ### Bug: Figuring out how to add the toggle button in the Create New Bidder form under the service categories, and also updating it in the state.
 
 ### Solution: So I installed all fontawesome dependies and imported them. I also increased using tailwind "text". To update the state I gave the icon a data-icon-name attribute and set it to the name it represent in the state. For instance "data-icon-name="insurance". Since their initial value is a boolean and it is set to false, I used that to check for whether the toggle is on or off using ternary operation. The fontawesome icon has two state, faToggleOn and faToggleOff. Then I created a helper function handleToggleOnClick(e, "serviceCategories") which receives the event and then the category in the form. Did this because of the way my state is structured.
 
-Here is the structure of my state:
-const [createNewBidderFormValues, setCreateNewBidderFormValues] = useState({
-general: {
-bidderNumber: "",
-name: "",
-lastDateModified: "",
-status: ""
-},
-addressAndContact: {
-address1: "",
-address2: "",
-city: "",
-contactPersonName: "",
-phoneNumber: "",
-email: "",
-},
-payment: {
-tinNumber: "",
-paymentTermCode: "",
-},
-serviceCategories: {
-serviceClass: "",
-insurance: false,
-freight: false,
-agency: false,
-storage: false
-}
-
+    Here is the structure of my state:
+    const [createNewBidderFormValues, setCreateNewBidderFormValues] = useState({
+        general: {
+            bidderNumber: "",
+            name: "",
+            lastDateModified: "",
+            status: ""
+        },
+        addressAndContact: {
+            address1: "",
+            address2: "",
+            city: "",
+            contactPersonName: "",
+            phoneNumber: "",
+            email: "",
+        },
+        payment: {
+            tinNumber: "",
+            paymentTermCode: "",
+        },
+        serviceCategories: {
+            serviceClass: "",
+            insurance: false,
+            freight: false,
+            agency: false,
+            storage: false
+        }
     });
     Here is the helper function and how it updates the state:
         const handleToggleOnClick = (e, section) => {
@@ -67,7 +67,7 @@ storage: false
       <Column dataField="status" caption="Description" cellRender={({ value }) => <div className="border-b border-greyDark cursor-pointer">{value}</div>} />
     </DataGrid>
 
-The Datagrid component is the parent component and recieves dataSorce and keyExpr as props.
+    The Datagrid component is the parent component and recieves dataSorce and keyExpr as props.
 
     The keyExpr property in the DevExpress DataGrid component is used to specify the unique identifier for each data item in the data source. It helps React and the DataGrid component efficiently manage and update the list of items by providing a stable identifier for each item. This is particularly important when data is added, removed, or updated, as React uses these keys to track changes and perform optimized rendering.
 
@@ -108,14 +108,55 @@ The Datagrid component is the parent component and recieves dataSorce and keyExp
     </DataGrid>
     </>
 
-The onRowPrepared is a callback function that allows you to customize and prepare the appearance and behavior of individual rows in the grid based on your own conditions. So i check if the rowType is equal to data so that the class wont be added to the headers, and then i add the tailwind class.
+    The onRowPrepared is a callback function that allows you to customize and prepare the appearance and behavior of individual rows in the grid based on your own conditions. So i check if the rowType is equal to data so that the class wont be added to the headers, and then i add the tailwind class.
 
-Below is the style i wrote in the index.css file to override the devextreme default styling:
-.dx-datagrid-rowsview tr {
-border-top: none !important;
-border-bottom-width: 1px !important;
-border-color: #808080 !important;
-}
+    Below is the style i wrote in the index.css file to override the devextreme default styling:
+    .dx-datagrid-rowsview tr {
+        border-top: none !important;
+        border-bottom-width: 1px !important;
+        border-color: #808080 !important;
+    }
+
+### Date: [04/09/2023]
+
+### Developer: [Adams Faisal Omokugbo]
+
+### Bug: Error anytime I create a remote repository with a readme and try to push from an existing local repository.
+
+    git push -u origin master
+
+    To https://github.com/Faisal-pixel/Issues-and-Resolutions-Javascript.git
+    ! [rejected]        master -> master (non-fast-forward)
+    error: failed to push some refs to 'https://github.com/Faisal-pixel/Issues-and-Resolutions-Javascript.git'
+    hint: Updates were rejected because the tip of your current branch is behind
+    hint: its remote counterpart. Integrate the remote changes (e.g.
+    hint: 'git pull ...') before pushing again.
+    hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+
+### Solution: The above error is copied from my cmd. Every single time I create a new repository on my github and select add Readme.md, I always have this error pushing to the repository from my existing local repository.
+
+    The way I have solved is to first connect the local repository to remote repository <git remote add origin <remote-repository-link>>
+    Then run git pull.
+
+Then you most likely will see this message: If you wish to set tracking information for this branch you can do so with:
+
+git branch --set-upstream-to=origin/<branch> master
+
+    The message you're seeing is suggesting that you can set up tracking information for your local master branch to a corresponding branch on the remote repository (typically named origin/master). This tracking information allows Git to understand the relationship between your local branch and the remote branch, making it easier to push and pull changes.
+
+    Here's what the command git branch --set-upstream-to=origin/<branch> master means:
+
+    git branch: This is the Git command to manage branches.
+    --set-upstream-to: This option is used to set up tracking information.
+    origin/<branch>: This part refers to the remote branch you want to set as the upstream branch. origin is the default name of the remote repository where you fetched or cloned the repository from, and <branch> is the name of the branch on the remote repository.
+    master: This is the name of the local branch you want to set up to track the remote branch.
+
+    So, when you run this command, it establishes a connection between your local master branch and the corresponding branch on the remote repository (typically origin/master). This allows you to use commands like git pull and git push without specifying the remote branch explicitly since Git will now know where to fetch and push changes.
+
+After this, I ran [git pull origin master --allow-unrelated-histories]
+
+    Keep in mind that merging unrelated histories should be done with caution, as it can lead to unexpected results, especially if the branches have significant differences in their commit histories.
+    Then run git push -u origin master
 
 ### Date: [04/09/2023]
 
