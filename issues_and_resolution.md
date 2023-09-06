@@ -5,7 +5,7 @@
     4. Figuring out how to style devextreme datagrid to my taste.
     5. Error anytime I create a remote repository with a readme and try to push from an existing local repository.
 
-### Bug: Figuring out how to add the toggle button in the Create New Bidder form under the service categories, and also updating it in the state.
+### Issue: Figuring out how to add the toggle button in the Create New Bidder form under the service categories, and also updating it in the state.
 
 ### Solution: So I installed all fontawesome dependies and imported them. I also increased using tailwind "text". To update the state I gave the icon a data-icon-name attribute and set it to the name it represent in the state. For instance "data-icon-name="insurance". Since their initial value is a boolean and it is set to false, I used that to check for whether the toggle is on or off using ternary operation. The fontawesome icon has two state, faToggleOn and faToggleOff. Then I created a helper function handleToggleOnClick(e, "serviceCategories") which receives the event and then the category in the form. Did this because of the way my state is structured.
 
@@ -53,7 +53,7 @@
 
 ### Developer: [Adams Faisal Omokugbo]
 
-### Bug: Figuring out how to integrate devextreme datagrid.
+### Issue: Figuring out how to integrate devextreme datagrid.
 
 ### Solution: So I installed devextreme using npm, below is the main structure to show a table
 
@@ -87,7 +87,7 @@
 
 ### Developer: [Adams Faisal Omokugbo]
 
-### Bug: Figuring out how to style devextreme datagrid to my taste.
+### Issue: Figuring out how to style devextreme datagrid to my taste.
 
 ### Solution: So I did some inspecting to find which classes are giving the important style, and gave my own style the important keyword to override the one given by devextreme.
 
@@ -121,7 +121,7 @@
 
 ### Developer: [Adams Faisal Omokugbo]
 
-### Bug: Error anytime I create a remote repository with a readme and try to push from an existing local repository.
+### Issue: Error anytime I create a remote repository with a readme and try to push from an existing local repository.
 
     git push -u origin master
 
@@ -159,5 +159,88 @@ After this, I ran [git pull origin master --allow-unrelated-histories]
     Then run git push -u origin master
 
 ### Date: [04/09/2023]
+
+### Developer: [Adams Faisal Omokugbo]
+
+### Issue: Using Redux Persist in Redux.
+
+### Solution: Read below
+
+    1) Install redux persist in your app: npm install redux-persist
+    2) import { persistStore, persistReducer } from 'redux-persist';
+       import storage from 'redux-persist/lib/storage';
+    3) set up a configuration object to configure what we want to store.
+        <code>
+            const persistConfig {
+                key: "root"     //specify the key under which the persisted state will be stored in the storage system (such as localStorage or AsyncStorage).
+            }
+        </code>
+    4) pass the reducer you want to persist and the persistConfig into the persistReducer
+        <code>
+            const persistedReducer = persistReducer(persistConfig, rootReducer)
+        </code>
+    5) create the store and pass the persistedReducer into the createStore.
+        <code>
+            const store = createStore(persistedReducer);
+            const persistedStore = persistStore(store);
+        </code>
+
+ALSO:
+In a Redux-based application, you typically have different parts of your state that are managed by different reducers or slices. Each of these parts can be considered a separate part of the application. For example, you might have:
+
+    Authentication: This part of the application manages user authentication state, including tokens, user information, and authentication status.
+
+    Shopping Cart: If your application has e-commerce functionality, you might have a part of the state dedicated to managing the contents of the shopping cart.
+
+    User Preferences: This part could store user preferences, such as theme preferences, language settings, or any other user-specific settings.
+
+    Blog Posts: If your application displays blog posts, you might have a part of the state dedicated to managing the list of blog posts and their details.
+
+    User Profile: This could store information about the currently logged-in user's profile.
+
+    Orders History: If your application allows users to view their order history, you might have a part of the state that manages this data.
+
+    Each of these parts of the state can have its own reducer or slice, and Redux Persist can be configured to persist each of these parts separately. This separation ensures that the state for one part doesn't interfere with the state for another part.
+
+    <code>
+        import { persistStore, persistReducer } from 'redux-persist';
+        import storage from 'redux-persist/lib/storage'; // Choose your storage method
+        import { combineReducers, createStore } from 'redux';
+        import { authReducer } from './authReducer';
+        import { cartReducer } from './cartReducer';
+        import { preferencesReducer } from './preferencesReducer';
+
+        const authPersistConfig = {
+        key: 'auth', // This will store the authentication state under the key "auth"
+        storage,
+        };
+
+        const cartPersistConfig = {
+        key: 'cart', // This will store the shopping cart state under the key "cart"
+        storage,
+        };
+
+        const preferencesPersistConfig = {
+        key: 'preferences', // This will store the user preferences state under the key "preferences"
+        storage,
+        };
+
+        const rootReducer = combineReducers({
+        auth: persistReducer(authPersistConfig, authReducer),
+        cart: persistReducer(cartPersistConfig, cartReducer),
+        preferences: persistReducer(preferencesPersistConfig, preferencesReducer),
+        // Add more reducers here for other parts of your state
+        });
+
+        const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+        // Create the Redux store with the persisted reducer
+        const store = createStore(persistedReducer);
+        const persistor = persistStore(store);
+
+        export { store, persistor };
+    </code>
+
+### Date: [06/09/2023]
 
 ### Developer: [Adams Faisal Omokugbo]
