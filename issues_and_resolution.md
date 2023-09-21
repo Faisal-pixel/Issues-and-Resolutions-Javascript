@@ -172,7 +172,9 @@ After this, I ran [git pull origin master --allow-unrelated-histories]
     3) set up a configuration object to configure what we want to store.
         <code>
             const persistConfig {
-                key: "root"     //specify the key under which the persisted state will be stored in the storage system (such as localStorage or AsyncStorage).
+                key: "root"     //specify the key under which the persisted state will be stored in the storage system (such as localStorage or AsyncStorage),
+                storage,
+                blacklist: ["user"] // list of properties of the reducer, in this rootReducer, that you want to ommit.
             }
         </code>
     4) pass the reducer you want to persist and the persistConfig into the persistReducer
@@ -181,8 +183,18 @@ After this, I ran [git pull origin master --allow-unrelated-histories]
         </code>
     5) create the store and pass the persistedReducer into the createStore.
         <code>
-            const store = createStore(persistedReducer);
-            const persistedStore = persistStore(store);
+            export const store = createStore(persistedReducer);
+            export const persistor = persistStore(store);
+        </code>
+    6) In the index.js:
+        <code>
+            import {PersistGate} from redux-persist/integration/react;
+            also import the import the persistor and the store.
+            <Provider store={store}>
+                <PersistGate persistor={persistor}>
+                    <App />
+                </PersistGate>
+            </Provider>
         </code>
 
 ALSO:
