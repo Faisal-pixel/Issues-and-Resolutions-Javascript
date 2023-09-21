@@ -214,7 +214,7 @@ In a Redux-based application, you typically have different parts of your state t
 
     Each of these parts of the state can have its own reducer or slice, and Redux Persist can be configured to persist each of these parts separately. This separation ensures that the state for one part doesn't interfere with the state for another part.
 
-    <code>
+    ```<code>
         import { persistStore, persistReducer } from 'redux-persist';
         import storage from 'redux-persist/lib/storage'; // Choose your storage method
         import { combineReducers, createStore } from 'redux';
@@ -251,7 +251,7 @@ In a Redux-based application, you typically have different parts of your state t
         const persistor = persistStore(store);
 
         export { store, persistor };
-    </code>
+    </code> ```
 
 ### Date: [06/09/2023]
 
