@@ -4,6 +4,7 @@
     2. Figuring out how to integrate devextreme datagrid.
     4. Figuring out how to style devextreme datagrid to my taste.
     5. Error anytime I create a remote repository with a readme and try to push from an existing local repository.
+    6. Figuring out how to integrate WebShareApi.
 
 ### Issue: Figuring out how to add the toggle button in the Create New Bidder form under the service categories, and also updating it in the state.
 
@@ -197,8 +198,8 @@ After this, I ran [git pull origin master --allow-unrelated-histories]
             </Provider>
         </code>
 
-ALSO:
-In a Redux-based application, you typically have different parts of your state that are managed by different reducers or slices. Each of these parts can be considered a separate part of the application. For example, you might have:
+    ALSO:
+    In a Redux-based application, you typically have different parts of your state that are managed by different reducers or slices. Each of these parts can be considered a separate part of the application. For example, you might have:
 
     Authentication: This part of the application manages user authentication state, including tokens, user information, and authentication status.
 
@@ -214,7 +215,7 @@ In a Redux-based application, you typically have different parts of your state t
 
     Each of these parts of the state can have its own reducer or slice, and Redux Persist can be configured to persist each of these parts separately. This separation ensures that the state for one part doesn't interfere with the state for another part.
 
-    ```<code>
+    <code>
         import { persistStore, persistReducer } from 'redux-persist';
         import storage from 'redux-persist/lib/storage'; // Choose your storage method
         import { combineReducers, createStore } from 'redux';
@@ -251,8 +252,34 @@ In a Redux-based application, you typically have different parts of your state t
         const persistor = persistStore(store);
 
         export { store, persistor };
-    </code> ```
+    </code>
 
 ### Date: [06/09/2023]
+
+### Developer: [Adams Faisal Omokugbo]
+
+---
+
+### Issue: Figuring out how to integrate WebShareApi.
+
+### Solution: Created an object called that stors the text I want to share, in the example below, it is the texToShare object. Then I created an async function that calls the navigator.share() function and catches the error.
+
+    const textToShare = {
+        title: 'Zakat Chain',
+        text: customMessage,
+        url: url
+    };
+
+    const handleShare = async () => {
+        try {
+          await navigator.share(textToShare);
+        } catch (error) {
+          alert('Error sharing:', error.message);
+        }
+      };
+
+### The I attached the handle share to a button
+
+### Date: [10/02/2024]
 
 ### Developer: [Adams Faisal Omokugbo]
