@@ -283,3 +283,57 @@ After this, I ran [git pull origin master --allow-unrelated-histories]
 ### Date: [10/02/2024]
 
 ### Developer: [Adams Faisal Omokugbo]
+
+### Issue: How To Redirect Someone To Send an Email From a Client.
+
+### Solution: Used the windows.location.href property. Below is the code:
+
+    window.location.href = `mailto:adamsfaisal2003@gmail.com?subject=${data.subject}&body=Hi, my name is ${data.name}. ${data.message}`; // Anything string can be passed to subject and body.
+
+### Date: [21/05/2024]
+
+### Developer: [Adams Faisal Omokugbo]
+
+### Issue: How To Import an svg file into a react app created with vite.
+
+### Solution: Install vite-plugin-svgr or Import the svg normally and then pass it as the src into the image tag:
+
+    npm install vite-plugin-svgr --save-dev
+    - Update vite.config.js: Create or update your vite.config.js file in the root of your project with the following content:
+            import { defineConfig } from 'vite';
+            import react from '@vitejs/plugin-react';
+            import svgr from 'vite-plugin-svgr';
+
+            export default defineConfig({
+            plugins: [
+                react(),
+                svgr(),
+            ],
+        });
+    - Create TypeScript Declaration File: Create a TypeScript declaration file named svg.d.ts in the src directory (or the root directory of your project):
+        // src/svg.d.ts
+        declare module "*.svg" {
+        import * as React from "react";
+        export const ReactComponent: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+        const src: string;
+        export default src;
+        }
+    - Ensure that the include field in your tsconfig.json includes the directory where svg.d.ts is located:
+        {
+            "compilerOptions": {
+                // other options
+            },
+            "include": ["src", "src/svg.d.ts"]
+        }
+    - import LogoIcon from "@/assets/images/logo.svg?react";
+
+    OR
+
+    - import LogoIcon from "@/assets/images/logo.svg";
+    - <img src={LogoIcon} alt="Logo" />
+    - One thing to note is that, if you do not set a defined size for the img tag, the svg will keep on increasing with the content of the parent div.
+
+
+### Date: [06/06/2024]
+
+### Developer: [Adams Faisal Omokugbo]
