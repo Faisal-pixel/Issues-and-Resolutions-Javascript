@@ -333,12 +333,9 @@ After this, I ran [git pull origin master --allow-unrelated-histories]
     - <img src={LogoIcon} alt="Logo" />
     - One thing to note is that, if you do not set a defined size for the img tag, the svg will keep on increasing with the content of the parent div.
 
-
 ### Date: [06/06/2024]
 
 ### Developer: [Adams Faisal Omokugbo]
-
-
 
 ### Issue: How To Figure out the day of the week using epoch time.
 
@@ -354,11 +351,11 @@ After this, I ran [git pull origin master --allow-unrelated-histories]
 
 ### Developer: [Adams Faisal Omokugbo]
 
-
 ### Issue: Figuring out how to slash a URL.
 
 ### Solution: Used Javascript url constructor to slash a URL. Below is the code:
-    ```javascript	
+
+    ```javascript
     const url = 'https://localhost:3000/staff';
     const parsedUrl = new URL(url);
     const baseUrl = `${parsedUrl.protocol}//${parsedUrl.host}`;
@@ -370,6 +367,76 @@ After this, I ran [git pull origin master --allow-unrelated-histories]
     . parsedUrl.protocol: This will get the protocol (e.g., https:).
     . parsedUrl.host: This will get the host, including the domain and port (e.g., localhost:3000).
     . ${parsedUrl.protocol}//${parsedUrl.host}: Combines the protocol and host to get the base URL.
+
+### Date: [19/09/2024]
+
+### Developer: [Adams Faisal Omokugbo]
+
+### Issue: Converting SVG to PNG and then downloading.
+
+### Solution: I rendered the SVG on a canvas first and then converted the canvas to a data URL and then downloaded it. Below is the code:
+
+    This is because SVG is a vector format and needs to be rasterized into pixels to be saved as a PNG, which is a raster format. Here’s why and how you should do it:
+    Below is the code:
+
+    ```javascript
+    import { useRef } from 'react';
+
+    import { QRCodeSVG } from 'qrcode.react';
+
+    const QRCodeComponent = () => {
+    const svgRef = useRef<SVGSVGElement>(null);
+
+    // Download the QR code as a PNG image
+    const downloadQRCode = () => {
+    if (!svgRef.current) return;
+
+        // Convert SVG to Canvas
+        const svgElement = svgRef.current;
+        const svgData = new XMLSerializer().serializeToString(svgElement);
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+
+        const img = new Image();
+        img.src = 'data:image/svg+xml;base64,' + window.btoa(svgData);
+        img.onload = () => {
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx.drawImage(img, 0, 0);
+
+        // Convert canvas to PNG data URL
+        const pngUrl = canvas.toDataURL('image/png');
+        const downloadLink = document.createElement('a');
+        downloadLink.href = pngUrl;
+        downloadLink.download = 'qrcode.png';
+        downloadLink.click();
+        };
+
+        };
+
+        return (
+        <div>
+        <QRCodeSVG
+                ref={svgRef}
+                value="Sample text"
+                size={256}
+                includeMargin={true}
+            />
+        <button onClick={downloadQRCode}>Download QR Code</button>
+        </div>
+        );
+        };
+
+        export default QRCodeComponent;
+
+    ```
+    Explanation
+    . Convert the SVG element to a string.
+    . Create a data URL from the SVG string and set it as the source of an Image object.
+    . Once the image loads, draw it onto the canvas.
+    . Convert the canvas content to a PNG data URL.
+    . Create a download link with the PNG data URL and trigger a click event to download the PNG file.
 
 ### Date: [19/09/2024]
 
