@@ -337,3 +337,40 @@ After this, I ran [git pull origin master --allow-unrelated-histories]
 ### Date: [06/06/2024]
 
 ### Developer: [Adams Faisal Omokugbo]
+
+
+
+### Issue: How To Figure out the day of the week using epoch time.
+
+### Solution: Used Javascript to convert from epoch to human readable format. Below is the code:
+
+    const timestamp = 1724889600; // Unix epoch time in seconds
+    const date = new Date(timestamp * 1000); // Convert to milliseconds
+    const dayOfWeek = date.toLocaleDateString('en-US', { weekday: 'long' });
+
+    console.log(dayOfWeek); // Output: "Thursday"
+
+### Date: [29/08/2024]
+
+### Developer: [Adams Faisal Omokugbo]
+
+
+### Issue: Figuring out how to slash a URL.
+
+### Solution: Used Javascript url constructor to slash a URL. Below is the code:
+    ```javascript	
+    const url = 'https://localhost:3000/staff';
+    const parsedUrl = new URL(url);
+    const baseUrl = `${parsedUrl.protocol}//${parsedUrl.host}`;
+
+    console.log(baseUrl); // Output: 'https://localhost:3000'
+    ```
+    Explanation
+    . new URL(url): Creates a URL object, which breaks down the URL into components (like protocol, host, pathname, etc.).
+    . parsedUrl.protocol: This will get the protocol (e.g., https:).
+    . parsedUrl.host: This will get the host, including the domain and port (e.g., localhost:3000).
+    . ${parsedUrl.protocol}//${parsedUrl.host}: Combines the protocol and host to get the base URL.
+
+### Date: [19/09/2024]
+
+### Developer: [Adams Faisal Omokugbo]
